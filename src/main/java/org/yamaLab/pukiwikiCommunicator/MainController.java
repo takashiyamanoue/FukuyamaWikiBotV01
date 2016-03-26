@@ -96,6 +96,7 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 		currentPage=x;
 		pushCurrentPage(x);		
 		StringTokenizer st=new StringTokenizer(x,"\n");
+		reading=true;
 		while(st.hasMoreElements()){
 			String l=st.nextToken();
 			if(commandLineNo>=maxCommands){
@@ -170,7 +171,12 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 				
 			}
 		}
-		currentPage=popCurrentPage();		
+		currentPage=popCurrentPage();
+		long execInterval=getExecRequestInterval();
+		if(pageStackIsEmpty()&& execInterval==0){
+			execCommands();
+			lastExec=System.currentTimeMillis();			
+		}
 	}
 
 	void readResult(StringTokenizer st, Vector <String> dl){
@@ -384,6 +390,10 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 		currentPageStackPointer--;
 		return rtn;
 	}
+	private boolean pageStackIsEmpty(){
+		if(currentPageStackPointer<=0) return true;
+		else return false;
+	}
 	private void readThePageFromOneOf(String urlList){
 		StringTokenizer st=new StringTokenizer(urlList);
 		while(st.hasMoreTokens()){
@@ -419,6 +429,7 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 	long lastCommandRequest;
 	long lastReturnOutput;
 	long lastExec;
+	boolean reading;
 //	@Override
 	public void run() {
 		lastCommandRequest=0;
@@ -436,7 +447,7 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 				this.connectButtonActionPerformed(urlx);
 				lastCommandRequest=System.currentTimeMillis();
 			}
-			if(time>lastExec+execInterval){
+			if(execInterval>0 && time>lastExec+execInterval){
 				execCommands();
 				lastExec=System.currentTimeMillis();
 			}
