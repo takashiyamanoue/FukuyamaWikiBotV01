@@ -833,9 +833,7 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 			gui.command("wikiMessage",rest[0]);
 			return "OK";
 		}
-		
-		return "ERROR";
-	
+	    return "ERROR";
 //		return null;
 	}
 
