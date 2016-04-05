@@ -98,6 +98,8 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 	private JLabel controlLabel;
 	private JTextArea controlArea;
 	private JTextArea errorArea;
+	private JTextField maxComField;
+	private JButton setMaxCommandButton;
 
 	/**
 	 * Launch the application.
@@ -120,9 +122,6 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 	 * Create the frame.
 	 */
 	public void init(){
-		this.loadProperties();
-//		vtraffic = new VisualTrf[256][256];
-		this.setProperties();	
 		this.mainController=new MainController(this, this, setting);	
 		traceCheckBox.setSelected(false);
 		mainController.parseCommand("traceCheckBox", "false");			
@@ -142,10 +141,15 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			    System.exit(0);
 			}
 		});
+		this.loadProperties();
+//		vtraffic = new VisualTrf[256][256];
+		
 		initMainGui();
 //  	initDeviceSettingGui();	
 		initTwitterGui();
 		twitterAuthSettingGui();
+		this.setProperties();	
+		
 		init();
 	}
 
@@ -385,18 +389,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 				commandArea = new JTextArea();
 				commandAreaPane.setViewportView(commandArea);
 				*/
-				String [] oneComLine=new String[]{"",""};
-				String [][] comLines =new String[maxCommands][];
-				for(int i=0;i<maxCommands;i++){
-					comLines[i]=new String[]{"",""};
-				}
-				DefaultTableModel tableModel= new DefaultTableModel(
-						comLines ,
-						new String[] { "No","Command" });
-				
-				commandTable = new JTable();
-				commandTable.setModel(tableModel);
-				commandAreaPane.setViewportView(commandTable);
+				initCommandTable(maxCommands);
 			}
 		}
 		{
@@ -546,6 +539,18 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 				}
 			});
 		}
+		{
+			JLabel maxLabel=new JLabel();
+			mainPanel.add(maxLabel);
+			maxLabel.setText("max com");			
+			maxLabel.setBounds(662, 245, 80, 25);
+			maxComField=new JTextField();
+			mainPanel.add(maxComField);			
+			maxComField.setText("2000");
+			maxComField.setBounds(662, 270, 100, 29);
+			
+		}
+
 		{
 			clearCommandButton = new JButton();
 			mainPanel.add(clearCommandButton);
@@ -726,6 +731,20 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
     });
 
 	}
+	private void initCommandTable(int size){
+		String [] oneComLine=new String[]{"",""};
+		String [][] comLines =new String[size][];
+		for(int i=0;i<size;i++){
+			comLines[i]=new String[]{"",""};
+		}
+		DefaultTableModel tableModel= new DefaultTableModel(
+				comLines ,
+				new String[] { "No","Command" });
+		
+		commandTable = new JTable();
+		commandTable.setModel(tableModel);
+		commandAreaPane.setViewportView(commandTable);		
+	}
 	public void loadProperties(){
 	       try {
 	           setting = new Properties() ;
@@ -784,6 +803,16 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		if(w==null){
 			setting.put("maxCommandsStr",""+this.maxCommands);
 		}
+		else{
+			try{
+		    this.maxCommands=(new Integer(w)).intValue();
+			}
+			catch(Exception e){
+				this.maxCommands=100;
+			}
+		}
+		initCommandTable(this.maxCommands);	
+//		
         w =this.setting.getProperty("oauth.consumerKey");
         if(w!=null){
         	this.consumerKeyTextField.setText(w);
@@ -814,6 +843,10 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		setting.put("oauth.consumerSecret", this.consumerSecretTextField.getText());
 		setting.put("oauth.accessToken", this.accessTokenTextField.getText());
 		setting.put("oauth.accessTokenSecret", this.accessTokenSecretTextField.getText());
+		setting.put("maxCommandsStr", this.maxComField.getText());
+	}
+	public void setMaxComand(String x){
+		
 	}
 	public String command(String x, String v) {
 		// TODO Auto-generated method stub
@@ -868,7 +901,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
             this.setting.put("secondaryURLList", v);
 		}
 		else	
-		if(x.equals("set ")){
+		if(x.startsWith("set ")){
 			x=x.substring("set ".length());
 			if(x.equals("readInterval")){
 				this.readIntervalField.setText(v);

@@ -85,7 +85,7 @@ public class Basic extends ABasic implements InterpreterInterface
         	return recSymbol("t");
         } // end if parseCsv
         else
-        if(eq(proc,recSymbol("sumif"))){
+        if(eq(proc,recSymbol("sumif"))||eq(proc,recSymbol("sumIf"))){
         	String table=print.print(car(argl));
         	String rowcol=print.print(second(argl));
         	int ix=((MyInt)(third(argl))).getInt();
@@ -96,7 +96,7 @@ public class Basic extends ABasic implements InterpreterInterface
             return sumif(table,rowcol, ix, operator, operand2, sx);
         }
         else
-        if(eq(proc,recSymbol("maxif"))){
+        if(eq(proc,recSymbol("maxif"))||eq(proc,recSymbol("maxIf"))){
             String table=print.print(car(argl));
             String rowcol=print.print(second(argl));
             int ix=((MyInt)(third(argl))).getInt();
@@ -107,7 +107,7 @@ public class Basic extends ABasic implements InterpreterInterface
             return maxif(table,rowcol, ix, operator, operand2, sx);
         }
         else
-        if(eq(proc,recSymbol("minif"))){
+        if(eq(proc,recSymbol("minif"))||eq(proc,recSymbol("minIf"))){
             String table=print.print(car(argl));
             String rowcol=print.print(second(argl));
             int ix=((MyInt)(third(argl))).getInt();
@@ -118,7 +118,7 @@ public class Basic extends ABasic implements InterpreterInterface
             return minif(table,rowcol, ix, operator, operand2, sx);
         }       
         else
-        if(eq(proc,recSymbol("countif"))){
+        if(eq(proc,recSymbol("countif"))||eq(proc,recSymbol("countIf"))){
         	String table=print.print(car(argl));
         	String rowcol=print.print(second(argl));
         	int ix=((MyInt)(third(argl))).getInt();
@@ -128,7 +128,7 @@ public class Basic extends ABasic implements InterpreterInterface
             return countif(table,rowcol, ix, operator, operand2);        	
         }
         else
-        if(eq(proc,recSymbol("getindex"))){
+        if(eq(proc,recSymbol("getindex"))||eq(proc,recSymbol("getIndex"))){
         	String table=print.print(car(argl));
         	String rowcol=print.print(second(argl));
         	int ix=((MyInt)(third(argl))).getInt();

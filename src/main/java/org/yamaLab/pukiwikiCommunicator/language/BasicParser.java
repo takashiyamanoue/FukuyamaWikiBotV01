@@ -328,21 +328,53 @@ public class BasicParser extends Parser
         w=lisp.cons(lisp.recSymbol("defdim"),w);
         ((ListCell)x).a=w;
 
-        if(!is("("))   {
+        if(is("("))   {
 //            putErrorMessage("Syntax Error at DIM statement.");
-            return true;
+           dmy=rB();
+           ListCell varl=new ListCell(); varl.d=lisp.nilSymbol; varl.a=lisp.nilSymbol;
+           if(!parseVarList(varl)) {
+               putErrorMessage("Syntax Error at DIM statement.");
+               return false;
+           }
+           dmy=rB();
+           if(!is(")")) {
+               putErrorMessage("Syntax Error at DIM statement.");
+               return false;
+           }
         }
         dmy=rB();
-        ListCell varl=new ListCell(); varl.d=lisp.nilSymbol; varl.a=lisp.nilSymbol;
-        if(!parseVarList(varl)) {
-            putErrorMessage("Syntax Error at DIM statement.");
-            return false;
-        }
-        dmy=rB();
-        if(!is(")")) {
-            putErrorMessage("Syntax Error at DIM statement.");
-            return false;
-        }
+        while(is(",")) {
+           dmy=rB();
+           ListCell y=new ListCell();
+           y.d=lisp.nilSymbol;
+           name=new ListCell(); name.d=lisp.nilSymbol;
+           type=new ListCell(); type.d=lisp.nilSymbol;
+           if(!isName(name,type)) {
+               putErrorMessage("Syntax Error at DIM statement.");
+               return false;
+           }
+
+           w=lisp.cons(((ListCell)name).a,lisp.nilSymbol);
+           w=lisp.cons(lisp.recSymbol("defdim"),w);
+           ((ListCell)y).a=w;
+
+           if(is("("))   {
+//            putErrorMessage("Syntax Error at DIM statement.");
+              dmy=rB();
+              ListCell varl=new ListCell(); varl.d=lisp.nilSymbol; varl.a=lisp.nilSymbol;
+              if(!parseVarList(varl)) {
+                  putErrorMessage("Syntax Error at DIM statement.");
+                  return false;
+              }
+              dmy=rB();
+              if(!is(")")) {
+                  putErrorMessage("Syntax Error at DIM statement.");
+                  return false;
+              }
+           }
+           lisp.nconc(x,y);
+           dmy=rB();           
+        }        
         return true;
 
     }
