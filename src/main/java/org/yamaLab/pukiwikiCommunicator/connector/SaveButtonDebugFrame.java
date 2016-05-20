@@ -317,6 +317,10 @@ implements AuthDialogListener, InterpreterInterface
 			        	  urlWithoutParameters=getUrlWithoutParameters(url);
 		        	      String authUrl="basicAuth-"+urlWithoutParameters;
 		        	      String idPass=this.setting.getProperty(authUrl);
+		        	      if(idPass==null){
+		        	    	  idPass="";
+		        	    	  this.setting.setProperty(authUrl,idPass );
+		        	      }
 		        	      StringTokenizer st1 =new StringTokenizer(idPass,":");
 		        	      String id="";
 		        	      String pas="";

@@ -72,9 +72,10 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 //	private JComboBox returnIntervalCombo;
 	private JTextField readIntervalField;
 	private JTextField execIntervalField;
+	private JTextField sendIntervalField;
 	private JLabel commandIntervalLabel;
 	private JLabel execIntervalLabel;
-	private JLabel returnIntervalLabel;
+	private JLabel sendIntervalLabel;
 	private JLabel pukiwikiMessageLabel;
 	private JTextArea resultArea;
 	private JScrollPane resultPane;
@@ -475,6 +476,15 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			mainPanel.add(execIntervalField);
 			execIntervalField.setText("60000");
 			execIntervalField.setBounds(310, h, 100, 29);
+
+			sendIntervalLabel = new JLabel();
+			mainPanel.add(sendIntervalLabel);
+			sendIntervalLabel.setText("send interval:");
+			sendIntervalLabel.setBounds(410, h, 100, 29);
+			sendIntervalField=new JTextField();
+			mainPanel.add(sendIntervalField);
+			sendIntervalField.setText("0");
+			sendIntervalField.setBounds(510, h, 100, 29);
 			
 /*			
 			String[] exInterval={"0.1-sec","0.5-sec","1-sec","2-sec","5-sec","10-sec","30-sec","1-min","5-min","10-min","30-min","1-h","12-h","24-h",""};
@@ -796,9 +806,10 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		if(w!=null)
 			this.execIntervalField.setText(w);
 //			this.execIntervalCombo.setSelectedItem(w);
-		w=this.setting.getProperty("returnInterval");
-//		if(w!=null)
-//			this.returnIntervalCombo.setSelectedItem(w);	
+		w=this.setting.getProperty("sendInterval");
+		if(w!=null)
+			this.sendIntervalField.setText(w);
+//			this.sendIntervalCombo.setSelectedItem(w);	
 		w=this.setting.getProperty("maxCommandsStr");
 		if(w==null){
 			setting.put("maxCommandsStr",""+this.maxCommands);
@@ -838,7 +849,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		setting.put("onlineCommandRefresh", ""+selected);
 		setting.put("readInterval", this.readIntervalField.getText());
         setting.put("execInterval", this.execIntervalField.getText());
-//		setting.put("returnInterval", this.returnIntervalCombo.getSelectedItem());
+		setting.put("sendInterval", this.sendIntervalField.getText());
 		setting.put("oauth.consumerKey", this.consumerKeyTextField.getText());
 		setting.put("oauth.consumerSecret", this.consumerSecretTextField.getText());
 		setting.put("oauth.accessToken", this.accessTokenTextField.getText());

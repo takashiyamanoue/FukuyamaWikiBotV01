@@ -427,19 +427,20 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 		new MainController(null,null,null).setVisible(true);
 	}
 	long lastCommandRequest;
-	long lastReturnOutput;
+	long lastSendOutput;
 	long lastExec;
 	boolean reading;
 //	@Override
 	public void run() {
 		lastCommandRequest=0;
-		lastReturnOutput=0;
+		lastSendOutput=0;
 		lastExec=0;
 		// TODO Auto-generated method stub
 		while(me!=null){
 			long time=System.currentTimeMillis();
 			long readInterval=getReadRequestInterval();
 			long execInterval=getExecRequestInterval();
+			long sendInterval=getSendRequestInterval();
 //			long returnInterval=getResultReturnInterval();
 			if(time>lastCommandRequest+readInterval){
 				this.writeMessage("connectionButton");
@@ -451,13 +452,13 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 				execCommands();
 				lastExec=System.currentTimeMillis();
 			}
-			/*
-			if(time>lastReturnOutput+returnInterval){
+			/* */
+			if(sendInterval>0 && time>lastSendOutput+sendInterval){
 				this.writeMessage("writeResult.");
-//				this.writeResult();
-				lastReturnOutput=System.currentTimeMillis();
+				this.writeResult();
+				lastSendOutput=System.currentTimeMillis();
 			}
-			*/
+			/* */
 			try{
 				Thread.sleep(100);
 			}
@@ -563,10 +564,10 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 		rtn=(new Long(x)).longValue();
 		return rtn;
 	}
-	private long getResultReturnInterval(){
+	private long getSendRequestInterval(){
 		long rtn,rx;
 //		this.setting.setProperty("returnInterval", (String)(this.returnIntervalCombo.getSelectedItem()));
-		String x=(String)(this.setting.getProperty("returnInterval"));
+		String x=(String)(this.setting.getProperty("sendInterval"));
 //		rtn=getMilisec(x);
 //	    return rtn;				
 		rtn=(new Long(x)).longValue();
