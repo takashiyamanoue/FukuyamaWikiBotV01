@@ -47,6 +47,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JPasswordField;
 /* 
 command: tweet "#test hello!" when "*,*,*,*,5,*"
  
@@ -271,7 +272,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			
 		}
 		{
-		   int h=130;
+		   int h=170;
 		   JLabel lblCommand = new JLabel("exec com:");
 		   lblCommand.setBounds(x1, h, 150, 24);
 		   mainPanel.add(lblCommand);
@@ -354,7 +355,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		}
 		
 		{
-			int h=70;
+			int h=90;
 			secondaryUrlLabel = new JLabel();
 			mainPanel.add(secondaryUrlLabel);
 			secondaryUrlLabel.setText("2nd. url:");
@@ -376,15 +377,14 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		}
 		
 		{
+			int h=210;
 			commandLabel = new JLabel();
 			mainPanel.add(commandLabel);
 			commandLabel.setText("command list:");
-			commandLabel.setBounds(x1, 170, 109, 33);
-		}
-		{
+			commandLabel.setBounds(x1, h, 109, 33);
 			commandAreaPane = new JScrollPane();
 			mainPanel.add(commandAreaPane);
-			commandAreaPane.setBounds(x2, 180, 550, 200);
+			commandAreaPane.setBounds(x2, h, 550, 200);
 			{
 				/*
 				commandArea = new JTextArea();
@@ -394,15 +394,14 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			}
 		}
 		{
+			int h=410;
 			resultLabel = new JLabel();
 		    mainPanel.add(resultLabel);
 			resultLabel.setText("result:");
-			resultLabel.setBounds(x1, 380, 105, 29);
-		}
-		{
+			resultLabel.setBounds(x1, h, 105, 29);
 			resultPane = new JScrollPane();
 			mainPanel.add(resultPane);
-			resultPane.setBounds(x2, 380, 550, 80);
+			resultPane.setBounds(x2, h, 550, 80);
 			{
 				resultArea = new JTextArea();
 				resultPane.setViewportView(resultArea);
@@ -433,9 +432,9 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		*/
 		{		
 //			int h=540;
-			int h=470;
+			int h=500;
 		    messageAreaScrollPane = new JScrollPane();
-		    messageAreaScrollPane.setBounds(x2, h, 550, 150);
+		    messageAreaScrollPane.setBounds(x2, h, 550, 120);
 		    mainPanel.add(messageAreaScrollPane);
 		
 		    messageArea = new JTextArea();
@@ -447,7 +446,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		}
 		
 		{
-			int h=100;
+			int h=142;
 			commandIntervalLabel = new JLabel();
 			mainPanel.add(commandIntervalLabel);
 			commandIntervalLabel.setText("read interval:");
@@ -529,7 +528,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			startWatchingButton = new JToggleButton();
 			mainPanel.add(startWatchingButton);
 			startWatchingButton.setText("Start");
-			startWatchingButton.setBounds(662, 180, 80, 25);
+			startWatchingButton.setBounds(662, 220, 80, 25);
 			startWatchingButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 //					startWatchingButtonActionPerformed(evt);
@@ -541,7 +540,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			endWatchingButton = new JButton();
 			mainPanel.add(endWatchingButton);
 			endWatchingButton.setText("End");
-			endWatchingButton.setBounds(662, 200, 80, 25);
+			endWatchingButton.setBounds(662, 245, 80, 25);
 			endWatchingButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 //					endWatchingButtonActionPerformed(evt);
@@ -553,11 +552,11 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			JLabel maxLabel=new JLabel();
 			mainPanel.add(maxLabel);
 			maxLabel.setText("max com");			
-			maxLabel.setBounds(662, 245, 80, 25);
+			maxLabel.setBounds(665, 290, 80, 25);
 			maxComField=new JTextField();
 			mainPanel.add(maxComField);			
 			maxComField.setText("2000");
-			maxComField.setBounds(662, 270, 100, 29);
+			maxComField.setBounds(662, 315, 100, 29);
 			
 		}
 
@@ -565,7 +564,7 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			clearCommandButton = new JButton();
 			mainPanel.add(clearCommandButton);
 			clearCommandButton.setText("Clear");
-			clearCommandButton.setBounds(662, 220, 80, 25);
+			clearCommandButton.setBounds(662, 270, 80, 25);
 			clearCommandButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					clearCommandButtonActionPerformed(evt);
@@ -583,6 +582,45 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		});
 		savePropertiesButton.setBounds(530, 0, 165, 29);
 		mainPanel.add(savePropertiesButton);
+		
+		{
+			int h=68;
+			JLabel auth1Label = new JLabel("Basic Auth.");
+			auth1Label.setBounds(x1, h, 80, 24);
+			mainPanel.add(auth1Label);
+			
+			auth1ID = new JTextField();
+			auth1ID.setBounds(x2, h, 160, 24);
+			mainPanel.add(auth1ID);
+			auth1ID.setColumns(10);
+			
+    		JLabel auth1Pass = new JLabel("Pass.:");
+	    	auth1Pass.setBounds(260, h, 70, 24);
+		    mainPanel.add(auth1Pass);
+		
+    		password1Field = new JPasswordField();
+	    	password1Field.setBounds(330, h, 105, 24);
+		    mainPanel.add(password1Field);
+		}		
+		{
+			int h=120;			
+		auth2Label = new JLabel("Auth2.");
+		auth2Label.setBounds(x1, h, 61, 24);
+		mainPanel.add(auth2Label);
+		
+		auth2ID = new JTextField();
+		auth2ID.setBounds(x2, h, 160, 24);
+		mainPanel.add(auth2ID);
+		auth2ID.setColumns(10);
+		
+		auth2PassLabel = new JLabel("Pass.:");
+		auth2PassLabel.setBounds(260, h, 61, 24);
+		mainPanel.add(auth2PassLabel);
+		
+		password2Field = new JPasswordField();
+		password2Field.setBounds(330, h, 105, 24);
+		mainPanel.add(password2Field);
+		}
 		
 		{
 //		   mainPanel.setSize(600, 700);
@@ -728,18 +766,25 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
     Twitter twitter;
     MainController pukiwikiCom;
 	private Vector<String> putMessageQueue=new Vector();
+	private JTextField auth1ID;
+	private JPasswordField password1Field;
+	private JLabel auth2Label;
+	private JTextField auth2ID;
+	private JLabel auth2PassLabel;
+	private JPasswordField password2Field;
 	/**
 	 * @wbp.nonvisual location=61,1
 	 */
 	public void putMessage(String x){
 		putMessageQueue.add(x);
+		/* caution! uncomment after gui build */
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	String so=putMessageQueue.remove(0);
                 messageArea.append(so+"¥n");
             }
-    });
-
+       });
+       /* */
 	}
 	private void initCommandTable(int size){
 		String [] oneComLine=new String[]{"",""};
@@ -791,6 +836,9 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		w=this.setting.getProperty("managerUrl");
 		if(w!=null)
 		   this.wikiUrlTextField.setText(w);
+		w=this.setting.getProperty("secondaryUrl");
+		if(w!=null)
+		   this.wikiSecondaryUrlTextField.setText(w);	
 		w=this.setting.getProperty("onlineCommandRefresh");
 		if(w!=null){
 			if(w.equals("true"))
@@ -819,10 +867,59 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		    this.maxCommands=(new Integer(w)).intValue();
 			}
 			catch(Exception e){
-				this.maxCommands=100;
+				this.maxCommands=200;
+			}
+		}		
+		initCommandTable(this.maxCommands);	
+		
+		String url=wikiUrlTextField.getText();
+		if(url!=null){
+			if(url.length()>=1){
+		      String urlWithoutParameters=getUrlWithoutParameters(url);
+	          String authUrl="basicAuth-"+urlWithoutParameters;
+		      w=this.setting.getProperty(authUrl);
+		      if(w!=null){
+  	            StringTokenizer st1 =new StringTokenizer(w,":");
+  	            String id="";
+  	            String pas="";
+  	            if(st1!=null){
+  	            	try{
+  	                  id=st1.nextToken();
+  	                  pas=st1.nextToken();
+                      this.auth1ID.setText(id);
+                      this.password1Field.setText(pas);
+  	            	}
+  	            	catch(Exception e){
+  	            		this.putMessage("Auth error."+e+" w="+w);
+  	            	}
+  	            }
+		      }
 			}
 		}
-		initCommandTable(this.maxCommands);	
+		String url2=wikiSecondaryUrlTextField.getText();
+		if(url2!=null){
+			if(url2.length()>=1){
+		      String urlWithoutParameters2=getUrlWithoutParameters(url2);
+	          String authUrl2="basicAuth-"+urlWithoutParameters2;
+		      w=this.setting.getProperty(authUrl2);
+		      if(w!=null){
+  	            StringTokenizer st1 =new StringTokenizer(w,":");
+  	            String id="";
+  	            String pas="";
+  	            if(st1!=null){
+  	            	try{
+     	              id=st1.nextToken();
+  	                  pas=st1.nextToken();
+                      this.auth2ID.setText(id);
+                      this.password2Field.setText(pas);
+	            	}
+	            	catch(Exception e){
+	            		this.putMessage("Auth error."+e+" w="+w);
+	            	}                  
+  	            }
+		      }		
+			}
+		}
 //		
         w =this.setting.getProperty("oauth.consumerKey");
         if(w!=null){
@@ -855,7 +952,33 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		setting.put("oauth.accessToken", this.accessTokenTextField.getText());
 		setting.put("oauth.accessTokenSecret", this.accessTokenSecretTextField.getText());
 		setting.put("maxCommandsStr", this.maxComField.getText());
+		String uname=auth1ID.getText();
+		char[] pwd=password1Field.getPassword();
+		String pwdx=new String(pwd);
+		String idPass=uname+":"+pwdx;
+		String url=wikiUrlTextField.getText();
+		String urlWithoutParameters=getUrlWithoutParameters(url);
+	        String authUrl="basicAuth-"+urlWithoutParameters;
+        setting.put(authUrl,idPass);
+        
+		String url2=wikiSecondaryUrlTextField.getText();
+		setting.put("secondaryUrl", url2);
+		String uname2=auth2ID.getText();
+		char[] pwd2=password2Field.getPassword();
+		String pwdx2=new String(pwd2);
+		String idPass2=uname2+":"+pwdx2;
+		String urlWithoutParameters2=getUrlWithoutParameters(url2);
+	        String authUrl2="basicAuth-"+urlWithoutParameters2;
+        setting.put(authUrl2,idPass2);
+		
 	}
+	private String getUrlWithoutParameters(String url){
+		int i=url.indexOf("?");
+		if(i<0) return url;
+		String rtn=url.substring(0,i);
+		return rtn;
+	}
+	
 	public void setMaxComand(String x){
 		
 	}
@@ -911,7 +1034,21 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			this.wikiSecondaryUrlTextField.setText(v);
             this.setting.put("secondaryURLList", v);
 		}
-		else	
+		else
+		if(x.equals("setPageName")){
+			String url=""+this.wikiUrlTextField.getText();
+			StringTokenizer st=new StringTokenizer(url,"?");
+			if(!st.hasMoreElements()) return "ERROR";
+			String baseUrl=st.nextToken();
+			if(!st.hasMoreElements()) return "ERROR";
+			String oldPageName=st.nextToken();
+			String newPageUrl=baseUrl+"?"+v;
+			putMessage("parseCommand-setPageName-"+url+" to "+newPageUrl);
+			this.wikiUrlTextField.setText(""+newPageUrl);
+			this.reflectProperties();
+			return "OK";
+		}
+		else
 		if(x.startsWith("set ")){
 			x=x.substring("set ".length());
 			if(x.equals("readInterval")){
@@ -923,6 +1060,13 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 			else
 			if(x.equals("execInterval")){
 				this.execIntervalField.setText(v);
+				this.reflectProperties();
+				this.saveProperties();
+				return "OK";
+			}
+			else
+			if(x.equals("sendInterval")){
+				this.sendIntervalField.setText(v);
 				this.reflectProperties();
 				this.saveProperties();
 				return "OK";
@@ -962,5 +1106,4 @@ public class WikiBotV1Gui extends JFrame implements CommandReceiver, ClassWithJT
 		}
 		return null;
 	}
-	
 }

@@ -220,6 +220,12 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 			return this.parseSetCommand(rest[0]);
 		}
 		else
+		if(Util.parseKeyWord(cmd,"clear ",rest)){
+			String rtn=this.parseCommand(cmd);
+			if(rtn.equals("ERROR")) return false;
+			return true;
+		}
+		else
 		if(Util.parseKeyWord(cmd,"program ",rest)){
 			inqueue=new CQueue();
 			Basic basic=new Basic("",inqueue,this);
@@ -328,6 +334,19 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 			return true;
 		}
 		else
+		if(Util.parseKeyWord(cmd,"sendInterval",rest)){
+			String v1=Util.skipSpace(rest[0]);
+			if(!Util.parseKeyWord(v1, "=", rest)) return false;
+			v1=Util.skipSpace(rest[0]);
+			if(!Util.parseInt(v1, intv2, rest)) return false;
+			int it=intv2[0];
+			Log.d(TAG,"sendCommandInterval-"+it);
+			this.sendResultInterval=(long)it;
+			gui.command("set sendInterval", ""+it);			
+			return true;
+		}
+		
+		else
 		if(Util.parseKeyWord(cmd,"reportLength",rest)){
 			String v1=Util.skipSpace(rest[0]);
 			if(!Util.parseKeyWord(v1, "=", rest)) return false;
@@ -362,7 +381,8 @@ implements PukiwikiJavaApplication, TwitterApplication, InterpreterInterface, Ru
 //			pName=pName.replace("<day_of_week>", this.currentDayOfWeek);
 			Log.d(TAG,"pageName="+pageName);
 //			this.sendCommandToActivity("connector setPageName", pageName);
-			this.parseCommand("setPageName", pageName);
+//			this.parseCommand("setPageName", pageName);
+			gui.command("setPageName", pageName);
 			return true;
 			
 		}

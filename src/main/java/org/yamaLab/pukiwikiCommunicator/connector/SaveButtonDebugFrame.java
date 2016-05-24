@@ -302,7 +302,13 @@ implements AuthDialogListener, InterpreterInterface
     		}
 
 //	    	method.getParams().setContentCharset("UTF-8");
-			int status=client.executeMethod(method);
+    		int status=0;
+    		try{
+			   status=client.executeMethod(method);
+    		}
+    		catch(Exception e){
+    			System.out.println("connect error."+e);
+    		}
 		    if (status != HttpStatus.SC_OK) {
 		          this.println("Method failed: " + method.getStatusLine());
 		          if((method.getStatusLine()).toString().indexOf("401")>=0){
